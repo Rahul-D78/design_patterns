@@ -1,6 +1,7 @@
 package com.design.carpicker.vehicle.parts
 
 class Seats: Part {
-    override val price: Int
+    override val selfCost: Int
         get() = 15000
+    override val totalCost = selfCost
 }

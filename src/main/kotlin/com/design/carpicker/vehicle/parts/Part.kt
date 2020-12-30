@@ -2,5 +2,6 @@ package com.design.carpicker.vehicle.parts
 
 interface Part {
 
-    val price: Int
+    val selfCost: Int
+    val totalCost: Int
 }
