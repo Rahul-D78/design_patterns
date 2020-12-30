@@ -1,10 +1,19 @@
 package com.design.carpicker.vehicle.parts
 
-class Chasis(val type: Type): Part {
+import com.design.carpicker.vehicle.parts.seat.Seat
 
-   val seats: List<Seats> = listOf(
-           Seats(), Seats()
-   )
+class Chasis(
+        val type: Type,
+        val seatFactory: Seat.Factory): Part {
+
+    val numSeats: Int = when(this.type){
+        Type.HATCHBACK -> 4
+        Type.SEDAN -> 5
+        Type.SUV -> 8
+        Type.PICKUP -> 2
+    }
+
+   val seats: List<Seat> = generateSequence { seatFactory.createSeat() }.take(numSeats).toList()
     override val selfCost: Int
         get() = when(this.type){
             Type.HATCHBACK -> 150000

@@ -5,6 +5,8 @@ import com.design.carpicker.vehicle.parts.Chasis
 import com.design.carpicker.vehicle.parts.Engine
 import com.design.carpicker.vehicle.parts.Transmission
 import com.design.carpicker.vehicle.parts.WheelBase
+import com.design.carpicker.vehicle.parts.seat.Seat
+import com.design.carpicker.vehicle.parts.wheel.Wheel
 
 fun main(args: Array<String>) {
     println("Hello")
@@ -12,7 +14,9 @@ fun main(args: Array<String>) {
     val hondaCity = Vehicle(
             WheelBase(
                     WheelBase.Size.MEDIUM,
-                    Chasis(Chasis.Type.SEDAN)
+                    Chasis(Chasis.Type.SEDAN,
+                    Seat.Factory(Seat.Upholstery.LEATHER)),
+                    Wheel.Factory(Wheel.Type.ALLOW)
             ),
             Engine(
                     Engine.Type.DIESEL,
@@ -21,7 +25,10 @@ fun main(args: Array<String>) {
     val audi = Vehicle(
             WheelBase(
                     WheelBase.Size.LARGE,
-                    Chasis(Chasis.Type.SUV)
+                    Chasis(Chasis.Type.SUV,
+                    Seat.Factory(Seat.Upholstery.REXINE)),
+                    Wheel.Factory(Wheel.Type.ALLOW),
+                    spearWheel = true
             ),
             Engine(
                     Engine.Type.HYBRID,
