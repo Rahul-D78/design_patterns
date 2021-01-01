@@ -1,3 +1,3 @@
 ## Project settings :
 
-1. Install `gradle` from <link src="https://gradle.org/install/" > Gradle site </link> .
+1. Install `gradle` from ("Gradle site")[https://gradle.org/install/]  .
