@@ -1,3 +1,6 @@
+## Introduction :
+This is a `CLI` based car building application if you want to try this out you can clone it .
+
 ## Project Settings :
 
 1. Install `gradle` from [Gradle site](https://gradle.org/install/)  .
