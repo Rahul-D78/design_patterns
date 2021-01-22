@@ -30,13 +30,15 @@ fun main(args: Array<String>) {
         else -> throw UsageError("Size has to be s , m or l")
     } }!!
 
-    val selectedChasis:Chasis.Type = TermUi.prompt(
+    val chasisBuilder = Chasis.Builder()
+
+    TermUi.prompt(
             "Enter Type Of chasis (H)actchback (S)edan (P)ickup (suv)SUV"
     ){when (it) {
-      "H" ,"h" -> Chasis.Type.HATCHBACK
-      "suv","SUV" -> Chasis.Type.SUV
-      "S", "s" -> Chasis.Type.SEDAN
-      "P", "p" -> Chasis.Type.PICKUP
+      "H" ,"h" -> chasisBuilder.setChasisType(Chasis.Type.HATCHBACK)
+      "suv","SUV" -> chasisBuilder.setChasisType(Chasis.Type.SUV)
+      "S", "s" -> chasisBuilder.setChasisType(Chasis.Type.SEDAN)
+      "P", "p" -> chasisBuilder.setChasisType(Chasis.Type.PICKUP)
       else -> throw UsageError("Type has to be s, p, h or suv")
     } }!!
 
@@ -77,12 +79,16 @@ fun main(args: Array<String>) {
         else -> throw UsageError("Type has to be a, r or f")
     } }!!
 
+//    Chasis(selectedChasis,
+//            Seat.Factory(selectedSeat)),
+
+
+    chasisBuilder.setSeatFactory(Seat.Factory(selectedSeat))
 
     val audi = Vehicle(
             WheelBase(
                     selectedWheelbase,
-                    Chasis(selectedChasis,
-                    Seat.Factory(selectedSeat)),
+                    chasisBuilder.build(),
                     Wheel.Factory(selectedWheel),
                     spearWheel = true
             ),
