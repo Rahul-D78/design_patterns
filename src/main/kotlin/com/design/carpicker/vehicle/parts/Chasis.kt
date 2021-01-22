@@ -5,16 +5,16 @@ import javax.sql.rowset.RowSetFactory
 
 class Chasis private constructor(
         val type: Type,
-        val seatFactory: Seat.Factory): Part {
+        val seats: List<Seat>
+): Part {
 
-    val numSeats: Int = when(this.type){
-        Type.HATCHBACK -> 4
-        Type.SEDAN -> 5
-        Type.SUV -> 8
-        Type.PICKUP -> 2
-    }
+//    val numSeats: Int = when(this.type){
+//        Type.HATCHBACK -> 4
+//        Type.SEDAN -> 5
+//        Type.SUV -> 8
+//        Type.PICKUP -> 2
+//    }
 
-   val seats: List<Seat> = generateSequence { seatFactory.createSeat() }.take(numSeats).toList()
     override val selfCost: Int
         get() = when(this.type){
             Type.HATCHBACK -> 150000
@@ -43,7 +43,13 @@ class Chasis private constructor(
         }
 
         fun build(): Chasis{
-            return Chasis(this.chasisType, this.seatFactory)
+            val numSeats: Int = when(this. chasisType){
+                Type.HATCHBACK -> 4
+                Type.SEDAN -> 5
+                Type.SUV -> 8
+                Type.PICKUP -> 2
+            }
+            return Chasis(this.chasisType, this.seatFactory.createSeats(numSeats))
         }
     }
 }

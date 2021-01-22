@@ -15,8 +15,8 @@ class Wheel private  constructor(val type: Type): Part {
 
     class Factory(val type: Type){
 
-        fun createWheel(): Wheel {
-            return Wheel(type)
+        fun createWheels(numOfWheels: Int): List<Wheel> {
+            return generateSequence { Wheel(type) }.take(numOfWheels).toList()
         }
 
     }

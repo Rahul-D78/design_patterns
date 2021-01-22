@@ -2,16 +2,12 @@ package com.design.carpicker.vehicle.parts
 
 import com.design.carpicker.vehicle.parts.wheel.Wheel
 
-class WheelBase(
+class WheelBase private constructor(
         val size: Size,
         val chasis: Chasis,
-        val wheelFactory: Wheel.Factory,
-        val spearWheel: Boolean  = false
+        val wheels: List<Wheel>,
         ): Part {
 
-    val numOfWheels: Int = 4 + (if(spearWheel) 1 else 0)
-
-    val wheel: List<Wheel> = generateSequence { wheelFactory.createWheel() }.take(numOfWheels).toList()
 
     override val selfCost: Int
         get() = when(this.size) {
@@ -20,8 +16,46 @@ class WheelBase(
             Size.LARGE -> 175000 
         }
     override val totalCost: Int
-        get() = chasis.totalCost + wheel.sumBy { it.totalCost }
+        get() = chasis.totalCost + wheels.sumBy { it.totalCost }
 
 
     enum class Size { SMALL, MEDIUM, LARGE}
+
+    class Builder {
+
+        private lateinit var size: WheelBase.Size
+        private lateinit var chasis: Chasis
+        private lateinit var wheelFactory: Wheel.Factory
+        private var spearWheel: Boolean = false
+
+        fun setSize(size: Size): Builder {
+            this.size = size
+            return this
+        }
+
+        fun setChasis(chasis: Chasis): Builder {
+            this.chasis = chasis
+            return this
+        }
+
+        fun setWheelFactory(wheelFactory: Wheel.Factory): Builder {
+            this.wheelFactory = wheelFactory
+            return this
+        }
+
+        fun setSpearWheel(spearWheel: Boolean): Builder {
+            this.spearWheel = spearWheel
+            return this
+        }
+
+        fun build(): WheelBase{
+            return WheelBase(
+                    this.size,
+                    this.chasis,
+                    this.wheelFactory.createWheels(
+                            4 + if(this.spearWheel) 1 else 0
+                    ),
+            )
+        }
+    }
 }
